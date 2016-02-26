@@ -1,0 +1,23 @@
+{
+    "name": "univerze/laravel-jira",
+    "description": "Laravel5 service for Jira REST api to search and create issues",
+    "keywords": [
+        "laravel",
+        "atlassian",
+        "jira"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Roland Bécsi",
+            "email": "roland.becsi@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Univerze\\Jira\\": "src/"
+        }
+    }
+}
