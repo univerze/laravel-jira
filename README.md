@@ -5,6 +5,7 @@ Easy access Jira rest api in Laravel5.
 * [Installation and Requirements](#installation)
 * [Searching issues](#searching)
 * [Creating issues](#creating)
+* [Editing issues](#editing)
 
 <a name="installation"></a>
 ## Installation and Requirements
@@ -66,5 +67,22 @@ $issue = Jira::create( array(
 Further information can be found on [JIRA documentation - create issue](https://developer.atlassian.com/jiradev/jira-apis/jira-rest-apis/jira-rest-api-tutorials/jira-rest-api-example-create-issue)
 
 > **NOTE** fields parameter is already included in the payload
+
+<a name="editing"></a>
+## Editing issues
+
+```php
+Jira::update( 'ISSUE-1234', array(
+    'description' => 'this is my new description'
+) );
+```
+
+In this case the JIRA api will return "204 - No Content" instead of issue details.
+
+Further information can be found on [JIRA documentation - edit issue](https://developer.atlassian.com/jiradev/jira-apis/jira-rest-apis/jira-rest-api-tutorials/jira-rest-api-example-edit-issues)
+
+> **NOTE** fields parameter is already included in the payload
+
+---
 
 Released under the MIT License. See the LICENSE file for details.
