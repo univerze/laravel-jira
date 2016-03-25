@@ -77,7 +77,7 @@ class Jira
      */
     public function getVersions( $projectName )
     {
-        $result = self::request('project/' . $projectName . "/versions")
+        $result = self::request('project/' . $projectName . "/versions",[]);
 
         return json_decode($result);
     }
@@ -103,7 +103,7 @@ class Jira
      */
     public function getVersionRelatedIssueCount( $versionId )
     {
-        $result = self::request('version/' . $versionId . "/relatedIssueCounts");
+        $result = self::request('version/' . $versionId . "/relatedIssueCounts", []);
 
         return json_decode($result);
     }
@@ -116,7 +116,7 @@ class Jira
      */
     public function getVersionUnresolvedIssueCount( $versionId )
     {
-        $result = self::request('version/' . $versionId . "/relatedIssueCounts");
+        $result = self::request('version/' . $versionId . "/unresolvedIssueCount", []);
 
         return json_decode($result);
     }
