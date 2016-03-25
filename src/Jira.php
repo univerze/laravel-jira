@@ -103,7 +103,7 @@ class Jira
      */
     public function getVersionRelatedIssueCount( $versionId )
     {
-        $result = self::request('version/' . $versionId . "/relatedIssueCounts", []);
+        $result = self::request('version/' . $versionId . "/relatedIssueCounts");
 
         return json_decode($result);
     }
@@ -116,7 +116,7 @@ class Jira
      */
     public function getVersionUnresolvedIssueCount( $versionId )
     {
-        $result = self::request('version/' . $versionId . "/unresolvedIssueCount", []);
+        $result = self::request('version/' . $versionId . "/unresolvedIssueCount");
 
         return json_decode($result);
     }
@@ -212,7 +212,7 @@ class Jira
             CURLOPT_HTTPHEADER     => array( 'Content-type: application/json' ),
             CURLOPT_RETURNTRANSFER => 1,
         ) );
-        if( is_null($data) )
+        if( !is_null($data) )
         {
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         }
