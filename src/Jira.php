@@ -83,6 +83,18 @@ class Jira
     }
 
     /**
+     * Create function for getting all statuses of a project
+     *
+     * @param string $projectName
+     * @return mixed
+     */
+    public function getStatuses( $projectName )
+    {
+        $result = self::request('project/' . $projectName . "/statuses");
+        return json_decode($result);
+    }
+
+    /**
      * Create function for getting details of a version
      *
      * @param string $versionId
