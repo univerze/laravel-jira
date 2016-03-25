@@ -77,7 +77,7 @@ class Jira
      */
     public function getVersions( $projectName )
     {
-        $result = self::request('project/' . $projectName . "/versions",[]);
+        $result = self::request('project/' . $projectName . "/versions");
 
         return json_decode($result);
     }
