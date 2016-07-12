@@ -28,6 +28,7 @@ class Jira
     public static function create( array $data )
     {
         $data   = json_encode( array( 'fields' => $data ) );
+        $data = str_replace('\\\\','\\',$data);
         $result = self::request( 'issue', $data, 1 );
 
         return json_decode( $result );
@@ -43,6 +44,7 @@ class Jira
     public static function update( $issue, array $data )
     {
         $data   = json_encode( array( 'fields' => $data ) );
+        $data = str_replace('\\\\','\\',$data);
         $result = self::request( 'issue/' . $issue, $data, 0, 1 );
 
         return json_decode( $result );
