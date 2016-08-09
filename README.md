@@ -51,7 +51,8 @@ the default configuration file to config/jira.php.
 ```
 Using the package without setting the connection will default to your 'default' setting.
 Define as many connections as you want in the 'connections' array.
-Choose your connection using the connection() method (see below [Changing connections](#connections))
+You can add your Jira configuration to your environment file (may need to change config accordingly).
+Choose your connection using the connection() method (see below [Changing connections](#connections)).
 
 <a name="searching"></a>
 ## Searching issues
@@ -122,7 +123,7 @@ You can call the connection() method with a string to select your connection def
 $response = Jira::connection('example')->search( 'project = YourProject AND labels = somelabel' );
 ```
 
-Finally you can call the connections() method with an array of url, username and password.
+Finally you can call the connection() method with an array of url, username and password.
 ```php
 $response = Jira::connection(['newUrl','newUsername','newPassword'])->search( 'project = YourProject AND labels = somelabel' );
 ```
