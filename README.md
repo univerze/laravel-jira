@@ -3,9 +3,11 @@
 Easy access Jira rest api in Laravel5.
 
 * [Installation and Requirements](#installation)
+* [Configuration](#configuration)
 * [Searching issues](#searching)
 * [Creating issues](#creating)
 * [Editing issues](#editing)
+* [Changing connections](#connections)
 
 <a name="installation"></a>
 ## Installation and Requirements
@@ -33,13 +35,35 @@ Then, update `config/app.php` by adding an entry for the service provider.
 Finally, from the command line again, run `php artisan vendor:publish` to publish
 the default configuration file to config/jira.php.
 
+<a name="configuration"></a>
+## Configuration
+
+```php
+'default'     => env('JIRA_CONNECTION', 'example'),
+
+'connections' => [
+    'example' => [
+        'url'      => env('JIRA_URL',  'http://jira.mydomain.com'),
+        'username' => env('JIRA_USER', 'johndoe'),
+        'password' => env('JIRA_PASS', 'pass123'),
+    ]
+]
+```
+Using the package without setting the connection will default to your 'default' setting.
+Define as many connections as you want in the 'connections' array.
+Choose your connection using the connection() method (see below [Changing connections](#connections))
+
 <a name="searching"></a>
 ## Searching issues
 
 The search method will take the jql query string:
 
 ```php
-$response = Jira::search( 'project = YourProject AND labels = somelabel' );
+use Jira;
+
+public function index(){
+    $response = Jira::search( 'project = YourProject AND labels = somelabel' );
+}
 ```
 
 You can build and test the jql beforehand if you go to your Jira site Issues > Search for Issues > Advanced Search.
@@ -82,6 +106,26 @@ In this case the JIRA api will return "204 - No Content" instead of issue detail
 Further information can be found on [JIRA documentation - edit issue](https://developer.atlassian.com/jiradev/jira-apis/jira-rest-apis/jira-rest-api-tutorials/jira-rest-api-example-edit-issues)
 
 > **NOTE** fields parameter is already included in the payload
+
+<a name="connections"></a>
+## Changing connections
+
+Multiple connections can be defined to access different JIRA instances.
+
+Calling the connection with empty parameter will default to your 'default' config in config/jira.php.
+```php
+$response = Jira::connection()->search( 'project = YourProject AND labels = somelabel' );
+```
+
+You can call the connection() method with a string to select your connection defined in config/jira.php.
+```php
+$response = Jira::connection('example')->search( 'project = YourProject AND labels = somelabel' );
+```
+
+Finally you can call the connections() method with an array of url, username and password.
+```php
+$response = Jira::connection(['newUrl','newUsername','newPassword'])->search( 'project = YourProject AND labels = somelabel' );
+```
 
 ---
 

@@ -6,6 +6,27 @@ class Jira
 {
 
     /**
+     * Handling conncetions on demand
+     * 
+     * @param type $connection
+     * @return \self
+     */
+    public static function connection( $connection = NULL )
+    {
+        if( is_string( $connection ) )
+        {
+            config( ['jira.connection' => $connection] );
+        } elseif( is_array( $connection ) )
+        {
+            config( ['jira.connection' => 'custom'] );
+            config( ['jira.connections.custom.url' => $connection[0]] );
+            config( ['jira.connections.custom.username' => $connection[1]] );
+            config( ['jira.connections.custom.password' => $connection[2]] );
+        }
+        return new self;
+    }
+
+    /**
      * Search function to search issues with JQL string
      *
      * @param null $jql
@@ -13,7 +34,7 @@ class Jira
      */
     public static function search( $jql = NULL )
     {
-        $data   = json_encode( array( 'jql' => $jql ) );
+        $data   = json_encode( array('jql' => $jql) );
         $result = self::request( 'search', $data );
 
         return json_decode( $result );
@@ -27,8 +48,8 @@ class Jira
      */
     public static function create( array $data )
     {
-        $data   = json_encode( array( 'fields' => $data ) );
-        $data = str_replace('\\\\','\\',$data);
+        $data   = json_encode( array('fields' => $data) );
+        $data   = str_replace( '\\\\', '\\', $data );
         $result = self::request( 'issue', $data, 1 );
 
         return json_decode( $result );
@@ -43,8 +64,8 @@ class Jira
      */
     public static function update( $issue, array $data )
     {
-        $data   = json_encode( array( 'fields' => $data ) );
-        $data = str_replace('\\\\','\\',$data);
+        $data   = json_encode( array('fields' => $data) );
+        $data   = str_replace( '\\\\', '\\', $data );
         $result = self::request( 'issue/' . $issue, $data, 0, 1 );
 
         return json_decode( $result );
@@ -63,11 +84,12 @@ class Jira
     {
         $ch = curl_init();
 
+        $connection = config( 'jira.connection', config( 'jira.default' ) );
         curl_setopt_array( $ch, array(
-            CURLOPT_URL            => config( 'jira.url' ) . '/rest/api/2/' . $request,
-            CURLOPT_USERPWD        => config( 'jira.username' ) . ':' . config( 'jira.password' ),
+            CURLOPT_URL            => config( "jira.connections.{$connection}.url" ) . '/rest/api/2/' . $request,
+            CURLOPT_USERPWD        => config( "jira.connections.{$connection}.username" ) . ':' . config( "jira.connections.{$connection}.password" ),
             CURLOPT_POSTFIELDS     => $data,
-            CURLOPT_HTTPHEADER     => array( 'Content-type: application/json' ),
+            CURLOPT_HTTPHEADER     => array('Content-type: application/json'),
             CURLOPT_RETURNTRANSFER => 1,
         ) );
 
