@@ -1,3 +1,8 @@
+> # Deprecated
+> This repository is deprecated and will no longer be maintained, as the Laravel and Jira APIs may have changed significantly over the last 2 years of inactivity of this package. Please feel free to clone the repository and provide your own fork! All the best!
+
+------
+
 # Laravel5 Jira service
 
 Easy access Jira rest api in Laravel5.
