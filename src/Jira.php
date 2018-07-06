@@ -43,7 +43,7 @@ class Jira
      */
     public static function update( $issue, array $data )
     {
-        $data   = json_encode( array( 'fields' => $data ) );
+        $data = json_encode( array( 'fields' => $data ) );
         $data = str_replace('\\\\','\\',$data);
         $result = self::request( 'issue/' . $issue, $data, 0, 1 );
 
@@ -59,7 +59,7 @@ class Jira
      * @param int $is_put
      * @return mixed
      */
-    private static function request( $request, $data, $is_post = 0, $is_put = 0 )
+    protected static function request( $request, $data, $is_post = 0, $is_put = 0 )
     {
         $ch = curl_init();
 
